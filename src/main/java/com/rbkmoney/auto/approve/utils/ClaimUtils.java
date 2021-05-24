@@ -1,6 +1,7 @@
 package com.rbkmoney.auto.approve.utils;
 
-import com.rbkmoney.damsel.claim_management.*;
+import com.rbkmoney.damsel.claim_management.ClaimCreated;
+import com.rbkmoney.damsel.claim_management.ShopParams;
 
 import java.util.List;
 import java.util.stream.Collectors;

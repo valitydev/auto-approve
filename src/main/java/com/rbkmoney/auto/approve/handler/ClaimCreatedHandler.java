@@ -3,7 +3,9 @@ package com.rbkmoney.auto.approve.handler;
 import com.rbkmoney.auto.approve.service.ClaimManagementService;
 import com.rbkmoney.auto.approve.service.DominantService;
 import com.rbkmoney.auto.approve.utils.ClaimUtils;
-import com.rbkmoney.damsel.claim_management.*;
+import com.rbkmoney.damsel.claim_management.ClaimCreated;
+import com.rbkmoney.damsel.claim_management.Event;
+import com.rbkmoney.damsel.claim_management.ShopParams;
 import com.rbkmoney.damsel.domain.Category;
 import com.rbkmoney.damsel.domain.CategoryType;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ClaimCreatedHandler implements EventHandler<Event>{
+public class ClaimCreatedHandler implements EventHandler<Event> {
 
     private final ClaimManagementService claimManagementServiceImpl;
     private final DominantService dominantServiceImpl;

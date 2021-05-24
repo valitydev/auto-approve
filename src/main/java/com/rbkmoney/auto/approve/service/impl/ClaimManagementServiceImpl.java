@@ -22,22 +22,31 @@ public class ClaimManagementServiceImpl implements ClaimManagementService {
     public void accept(UserInfo userInfo, String partyId, Long claimId, Integer claimRevision) {
         log.info("Accept a claim for partyId={}, claimId={}", partyId, claimId);
         new WFlow().createServiceFork(() -> {
-                    ContextUtils.setCustomMetadataValue(UserIdentityIdExtensionKit.KEY, userInfo.getId());
-                    ContextUtils.setCustomMetadataValue(UserIdentityEmailExtensionKit.KEY, userInfo.getEmail());
-                    ContextUtils.setCustomMetadataValue(UserIdentityUsernameExtensionKit.KEY, userInfo.getUsername());
-                    ContextUtils.setCustomMetadataValue(UserIdentityRealmExtensionKit.KEY, getType(userInfo));
-                    try {
-                        claimManagementClient.acceptClaim(partyId, claimId, claimRevision);
-                    } catch (ClaimNotFound e) {
-                        throw new NotFoundException(String.format("Claim not found for partyId=%s, claimId=%d, claimRevision=%d", partyId, claimId, claimRevision), e);
-                    } catch (InvalidClaimRevision | InvalidClaimStatus e) {
-                        throw new RuntimeException(String.format("Invalid claim state for partyId=%s, claimId=%d, claimRevision=%d", partyId, claimId, claimRevision), e);
-                    } catch (TException e) {
-                        throw new RuntimeException("Thrift exception while processed event", e);
-                    }
-                }
-        ).run();
+            ContextUtils.setCustomMetadataValue(UserIdentityIdExtensionKit.KEY, userInfo.getId());
+            ContextUtils.setCustomMetadataValue(UserIdentityEmailExtensionKit.KEY, userInfo.getEmail());
+            ContextUtils.setCustomMetadataValue(UserIdentityUsernameExtensionKit.KEY, userInfo.getUsername());
+            ContextUtils.setCustomMetadataValue(UserIdentityRealmExtensionKit.KEY, getType(userInfo));
+            acceptClaim(partyId, claimId, claimRevision);
+        }).run();
         log.info("Claim has been accepted for partyId={}, claimId={}", partyId, claimId);
+    }
+
+    private void acceptClaim(String partyId, Long claimId, Integer claimRevision) {
+        try {
+            claimManagementClient.acceptClaim(partyId, claimId, claimRevision);
+        } catch (ClaimNotFound e) {
+            throw new NotFoundException(
+                    String.format("Claim not found for partyId=%s, claimId=%d, claimRevision=%d",
+                            partyId, claimId, claimRevision),
+                    e);
+        } catch (InvalidClaimRevision | InvalidClaimStatus e) {
+            throw new RuntimeException(
+                    String.format("Invalid claim state for partyId=%s, claimId=%d, claimRevision=%d",
+                            partyId, claimId, claimRevision),
+                    e);
+        } catch (TException e) {
+            throw new RuntimeException("Thrift exception while processed event", e);
+        }
     }
 
     private UserTypeEnum getType(UserInfo userInfo) {

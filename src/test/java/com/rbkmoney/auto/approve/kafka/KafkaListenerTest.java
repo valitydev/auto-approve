@@ -25,13 +25,13 @@ public class KafkaListenerTest extends AbstractKafkaTest {
     @Value("${kafka.topic}")
     public String topic;
 
-    private KafkaTemplate<String, Event> kafkaTemplate = new KafkaTemplate<>(createProducerFactory());
+    private final KafkaTemplate<String, Event> kafkaTemplate = new KafkaTemplate<>(createProducerFactory());
 
     @MockBean
     private ClaimCreatedHandler reviewedHandler;
 
     @Before
-    public void setUp(){
+    public void setUp() {
         given(reviewedHandler.isAccept(any())).willCallRealMethod();
     }
 
