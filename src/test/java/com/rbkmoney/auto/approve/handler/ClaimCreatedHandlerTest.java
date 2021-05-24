@@ -6,8 +6,6 @@ import com.rbkmoney.auto.approve.service.DominantService;
 import com.rbkmoney.damsel.claim_management.*;
 import com.rbkmoney.damsel.domain.Category;
 import com.rbkmoney.damsel.domain.CategoryRef;
-import com.rbkmoney.damsel.domain.ShopDetails;
-import com.rbkmoney.damsel.domain.ShopLocation;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
