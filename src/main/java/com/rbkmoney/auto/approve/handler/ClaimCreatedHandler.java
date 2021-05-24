@@ -18,7 +18,7 @@ import java.util.List;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class ClaimCreatedHandler implements EventHandler<Event>{
+public class ClaimCreatedHandler implements EventHandler<Event> {
 
     private final ClaimManagementService claimManagementServiceImpl;
     private final DominantService dominantServiceImpl;

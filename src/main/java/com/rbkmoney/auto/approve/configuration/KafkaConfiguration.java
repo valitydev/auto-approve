@@ -63,11 +63,13 @@ public class KafkaConfiguration {
     private void configureSsl(Map<String, Object> props, KafkaSslProperties kafkaSslProperties) {
         if (kafkaSslProperties.isEnabled()) {
             props.put(CommonClientConfigs.SECURITY_PROTOCOL_CONFIG, SecurityProtocol.SSL.name());
-            props.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG, new File(kafkaSslProperties.getTrustStoreLocation()).getAbsolutePath());
+            props.put(SslConfigs.SSL_TRUSTSTORE_LOCATION_CONFIG,
+                    new File(kafkaSslProperties.getTrustStoreLocation()).getAbsolutePath());
             props.put(SslConfigs.SSL_TRUSTSTORE_PASSWORD_CONFIG, kafkaSslProperties.getTrustStorePassword());
             props.put(SslConfigs.SSL_KEYSTORE_TYPE_CONFIG, kafkaSslProperties.getKeyStoreType());
             props.put(SslConfigs.SSL_TRUSTSTORE_TYPE_CONFIG, kafkaSslProperties.getTrustStoreType());
-            props.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG, new File(kafkaSslProperties.getKeyStoreLocation()).getAbsolutePath());
+            props.put(SslConfigs.SSL_KEYSTORE_LOCATION_CONFIG,
+                    new File(kafkaSslProperties.getKeyStoreLocation()).getAbsolutePath());
             props.put(SslConfigs.SSL_KEYSTORE_PASSWORD_CONFIG, kafkaSslProperties.getKeyStorePassword());
             props.put(SslConfigs.SSL_KEY_PASSWORD_CONFIG, kafkaSslProperties.getKeyPassword());
         }
@@ -80,11 +82,13 @@ public class KafkaConfiguration {
     }
 
     @Bean
+    @SuppressWarnings("LineLength")
     public KafkaListenerContainerFactory<ConcurrentMessageListenerContainer<String, Event>> kafkaListenerContainerFactory(
             ConsumerFactory<String, Event> consumerFactory,
             KafkaConsumerProperties kafkaConsumerProperties
     ) {
-        ConcurrentKafkaListenerContainerFactory<String, Event> factory = new ConcurrentKafkaListenerContainerFactory<>();
+        ConcurrentKafkaListenerContainerFactory<String, Event> factory =
+                new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
         factory.getContainerProperties().setAckOnError(false);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
