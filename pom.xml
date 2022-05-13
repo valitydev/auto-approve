@@ -49,6 +49,10 @@
             <groupId>dev.vality.geck</groupId>
             <artifactId>common</artifactId>
         </dependency>
+        <dependency>
+            <groupId>dev.vality</groupId>
+            <artifactId>shared-resources</artifactId>
+        </dependency>
 
         <!--kafka-->
         <dependency>
