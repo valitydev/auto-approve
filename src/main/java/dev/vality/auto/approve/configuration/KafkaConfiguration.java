@@ -19,10 +19,7 @@ import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.config.KafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
-import org.springframework.kafka.listener.ConcurrentMessageListenerContainer;
-import org.springframework.kafka.listener.ContainerProperties;
-import org.springframework.kafka.listener.ErrorHandler;
-import org.springframework.kafka.listener.SeekToCurrentErrorHandler;
+import org.springframework.kafka.listener.*;
 import org.springframework.util.backoff.FixedBackOff;
 
 import java.io.File;
@@ -90,15 +87,16 @@ public class KafkaConfiguration {
         ConcurrentKafkaListenerContainerFactory<String, Event> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory);
-        factory.getContainerProperties().setAckOnError(false);
         factory.getContainerProperties().setAckMode(ContainerProperties.AckMode.MANUAL);
-        factory.setErrorHandler(kafkaErrorHandler());
+        factory.setCommonErrorHandler(kafkaErrorHandler());
         factory.setConcurrency(kafkaConsumerProperties.getConcurrency());
         return factory;
     }
 
-    private ErrorHandler kafkaErrorHandler() {
-        return new SeekToCurrentErrorHandler(new FixedBackOff(0, maxAttempts));
+    private CommonErrorHandler kafkaErrorHandler() {
+        DefaultErrorHandler errorHandler = new DefaultErrorHandler(new FixedBackOff(0, maxAttempts));
+        errorHandler.setAckAfterHandle(false);
+        return errorHandler;
     }
 
 }
