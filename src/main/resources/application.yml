@@ -1,11 +1,11 @@
 server:
-  port: '@server.port@'
+  port: ${server.port}
 
 management:
   security:
     flag: false
   server:
-    port: '@management.port@'
+    port: ${management.port}
   metrics:
     export:
       prometheus:
@@ -24,7 +24,7 @@ management:
 
 spring:
   application:
-    name: '@project.name@'
+    name: ${project.name}
   output:
     ansi:
       enabled: always
@@ -40,7 +40,7 @@ spring:
         connections.max.idle.ms: 300000
         session.timeout.ms: 300000
 info:
-  version: '@project.version@'
+  version: ${project.version}
   stage: dev
 
 claim:
