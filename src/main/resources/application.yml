@@ -60,3 +60,4 @@ kafka:
     concurrency: 5
   retry-policy:
     maxAttempts: 10
+    authErrorRetrySec: 60
