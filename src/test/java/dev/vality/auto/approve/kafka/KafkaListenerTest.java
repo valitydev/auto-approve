@@ -63,7 +63,6 @@ public class KafkaListenerTest extends AbstractKafkaTest {
                                                         .setLocation(ShopLocation.url("rrr"))
                                                         .setContractId("ee")
                                                         .setDetails(new ShopDetails("ff"))
-                                                        .setPayoutToolId("1111")
                                                         .setCategory(new CategoryRef(1))))))))));
     }
 }
